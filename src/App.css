@@ -2,11 +2,14 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+  /* text-align: center; */
   font-family: "open sans", sans-serif;
   padding: 20px 60px;
 }
-
+a {
+  text-decoration: none;
+  color: black;
+}
 .logo {
   height: 6em;
   padding: 1.5em;
