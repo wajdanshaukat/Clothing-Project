@@ -1,7 +1,9 @@
 // Import the required functions from Firebase SDK
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+
+
 
 // Your Firebase configuration
 const config = {
@@ -31,7 +33,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
   const snapShot = await getDoc(userDocRef);
 
-  console.log("User snapshot exists:", snapShot.exists());
+  // console.log("User snapshot exists:", snapShot.exists());
     if (!snapShot.exists()) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
@@ -55,7 +57,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 // Set up Google auth provider
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
-export const signInWithGoogle = () => signInWithRedirect(auth, provider);
+export const signInWithGoogle = () => signInWithPopup(auth, provider);
 
 // Export the app instance if needed
 export default app;
