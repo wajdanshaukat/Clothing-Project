@@ -2,7 +2,7 @@ import React from "react";
 import HomePage from "./pages/Homepage/HomepageComponent";
 import ShopPage from "./pages/shop/ShopComponent";
 import SignInAndSignUp from "./pages/signin-&-signup/signin-&-signupComponent";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import {
   auth,
   createUserProfileDocument,
@@ -54,19 +54,26 @@ class App extends React.Component {
       <div>
         <Header />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route exact path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
-          <Route path="/signin" element={<SignInAndSignUp />} />
+          <Route
+            exact
+            path="/signin"
+            render={() =>
+              this.props.currentUser ? <Redirect to="/" /> : <SignInAndSignUp />
+            }
+          />
         </Routes>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setCurrentUser: (user) => dispatch(setCurrentUser(user)),
-  };
-};
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser,
+});
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+});
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

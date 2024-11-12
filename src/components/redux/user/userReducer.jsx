@@ -1,3 +1,6 @@
+import { UserActionTypes } from "./userType";
+
+
 const INITIAL_STATE = {
   currentUser: null,
   error: null,
