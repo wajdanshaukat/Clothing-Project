@@ -15,13 +15,6 @@ import Header from "./components/header/HeaderComponent";
 import "./App.css";
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentUser: null,
-    };
-  }
-
   unsubscribeFromAuth = null;
 
   componentDidMount() {
@@ -30,14 +23,13 @@ class App extends React.Component {
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
-        // console.log("User document reference:", userRef);
 
         userRef.onSnapshot((snapshot) => {
           setCurrentUser({
             id: snapshot.id,
             ...snapshot.data(),
           });
-          console.log(setCurrentUser);
+          console.log("Current user set:", snapshot.data());
         });
       } else {
         setCurrentUser(userAuth);
@@ -57,7 +49,7 @@ class App extends React.Component {
           <Route exact path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
           <Route
-          exact
+            exact
             path="/signin"
             element={
               this.props.currentUser ? <Navigate to="/" /> : <SignInAndSignUp />
