@@ -40,3 +40,6 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(CollectionPage);
+
+
+// A little error occure
