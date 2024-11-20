@@ -1,13 +1,16 @@
-// src/pages/collection/collection-component.jsx
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { useParams } from "react-router-dom"; 
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import CollectionItem from "../../components/collection-item/Collection-itemComponent";
 import { selectCollection } from "../../components/redux/shop/shop-selector";
 import "./collection-style.scss";
 
-const CollectionPage = ({ collection }) => {
-  const { collectionId } = useParams(); // Use useParams here
+const CollectionPage = () => {
+  const { collectionId } = useParams();
+
+  const collection = useSelector((state) =>
+    selectCollection(collectionId)(state)
+  );
 
   useEffect(() => {
     console.log("Collection ID from URL:", collectionId);
@@ -32,14 +35,4 @@ const CollectionPage = ({ collection }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  const { collectionId } = useParams();
-  return {
-    collection: selectCollection(collectionId)(state),
-  };
-};
-
-export default connect(mapStateToProps)(CollectionPage);
-
-
-// A little error occure
+export default CollectionPage;

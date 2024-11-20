@@ -11,11 +11,11 @@ import { selectCartItems } from "../../components/redux/cart/cartSelectors";
 import "./cart-dropdown-style.scss";
 
 const CartDropdown = ({ cartItems, dispatch }) => {
-  const navigate = useNavigate(); // Use the useNavigate hook
+  const navigate = useNavigate(); 
 
   const handleCheckout = () => {
-    navigate("/checkout"); // Navigate to checkout
-    dispatch(ToggleCartHidden()); // Dispatch ToggleCartHidden after navigation
+    navigate("/checkout"); 
+    dispatch(ToggleCartHidden()); 
   };
 
   return (

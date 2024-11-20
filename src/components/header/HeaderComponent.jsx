@@ -1,48 +1,70 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { auth } from "../firebase/firebaseUtils";
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
-
-import CartIcon from "../cart-icon/cartIcon-component";
-import CartDropdown from "../cart-dropdown/cartDropdown-component";
+import { setCurrentUser } from "../redux/user/userAction";
 import { selectCartHidden } from "../redux/cart/cartSelectors";
 import { selectCurrentUser } from "../redux/user/userSelectors";
-
-import { Link } from "react-router-dom";
+import CartIcon from "../cart-icon/cartIcon-component";
+import CartDropdown from "../cart-dropdown/cartDropdown-component";
 import CrownLogo from "../../assets/logoone.svg";
 
 import "./header-style.scss";
 
-const Header = ({ currentUser, hidden }) => (
-  <div className="header">
-    <Link to="/" className="logo-container">
-      <img src={CrownLogo} alt="Logo" />
-    </Link>
-    <div className="options">
-      <Link className="option" to="/shop">
-        SHOP
+const Header = () => {
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
+  const hidden = useSelector(selectCartHidden);
+
+  useEffect(() => {
+    const unsubscribeFromAuth = auth.onAuthStateChanged((userAuth) => {
+      if (userAuth) {
+        dispatch(
+          setCurrentUser({
+            id: userAuth.uid,
+            email: userAuth.email,
+            displayName: userAuth.displayName,
+            ...userAuth,
+          })
+        );
+      } else {
+        dispatch(setCurrentUser(null));
+      }
+    });
+
+    return () => unsubscribeFromAuth();
+  }, [dispatch]);
+
+  const handleSignOut = () => {
+    auth.signOut();
+  };
+
+  return (
+    <div className="header">
+      <Link to="/" className="logo-container">
+        <img src={CrownLogo} alt="Logo" />
       </Link>
-      <Link className="option" to="/contact">
-        CONTACT
-      </Link>
-      {currentUser ? (
-        <div className="option" onClick={() => auth.signOut()}>
-          SIGN OUT
-        </div>
-      ) : (
-        <Link className="option" to="/signin">
-          SIGN IN
+      <div className="options">
+        <Link className="option" to="/shop">
+          SHOP
         </Link>
-      )}
-      <CartIcon />
+        <Link className="option" to="/contact">
+          CONTACT
+        </Link>
+        {currentUser ? (
+          <div className="option" onClick={handleSignOut}>
+            SIGN OUT
+          </div>
+        ) : (
+          <Link className="option" to="/signin">
+            SIGN IN
+          </Link>
+        )}
+        <CartIcon />
+      </div>
+      {hidden ? null : <CartDropdown />}
     </div>
-    {hidden ? null : <CartDropdown />}
-  </div>
-);
+  );
+};
 
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
-  hidden: selectCartHidden,
-});
-
-export default connect(mapStateToProps)(Header);
+export default Header;
