@@ -38,13 +38,11 @@ const App = () => {
         dispatch(setCurrentUser(null));
       }
     });
-  
+
     return () => {
       unsubscribeFromAuth();
     };
   }, [dispatch]);
-  
-  
 
   return (
     <div>

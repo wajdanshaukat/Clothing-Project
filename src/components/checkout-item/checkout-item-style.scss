@@ -23,7 +23,7 @@
   }
 
   .quantity {
-display: flex;
+    display: flex;
 
     .arrow {
       cursor: pointer;
@@ -32,7 +32,7 @@ display: flex;
     .value {
       margin: 0 10px;
     }
-}
+  }
 
   .remove-button {
     padding-left: 12px;

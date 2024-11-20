@@ -23,4 +23,4 @@ const MenuItem = ({ id, linkUrl, imageUrl, title, size }) => {
   );
 };
 
-export default (MenuItem);
+export default MenuItem;

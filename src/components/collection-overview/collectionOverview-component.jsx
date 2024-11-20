@@ -6,7 +6,8 @@ import { selectCollectionsForPreview } from "../../components/redux/shop/shop-se
 import "./collection-overview-style.scss";
 
 const CollectionOverview = ({ collections }) => {
-  if (!collections || Object.keys(collections).length === 0) return <div>Loading...</div>;
+  if (!collections || Object.keys(collections).length === 0)
+    return <div>Loading...</div>;
 
   return (
     <div className="collection-overview">
