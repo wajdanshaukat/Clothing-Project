@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import CollectionItem from "../../components/collection-item/Collection-itemComponent";
 import { selectCollection } from "../../components/redux/shop/shop-selector";
+
 import "./collection-style.scss";
 
 const CollectionPage = () => {

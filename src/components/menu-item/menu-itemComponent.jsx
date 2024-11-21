@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+
 import "./menu-item.scss";
+
 const MenuItem = ({ id, linkUrl, imageUrl, title, size }) => {
   const navigate = useNavigate();
   return (

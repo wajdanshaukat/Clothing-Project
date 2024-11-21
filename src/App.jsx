@@ -16,8 +16,7 @@ import { setCurrentUser } from "./components/redux/user/userAction";
 import { selectCurrentUser } from "./components/redux/user/userSelectors";
 import CollectionPage from "./pages/collection/collection-component";
 
-import "./App.css";
-
+import { GlobalStyle } from "./globel-style";
 const App = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
@@ -47,6 +46,7 @@ const App = () => {
   return (
     <div>
       <Header />
+      <GlobalStyle />
       <Routes>
         <Route exact path="/" element={<HomePage />} />
         <Route path="/shop/*" element={<ShopPage />} />

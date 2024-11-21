@@ -38,4 +38,25 @@
     padding-left: 12px;
     cursor: pointer;
   }
+
+@media screen and (max-width: 800px) {
+  font-size: 18px;  
+
+  .image-container {
+    width: 22%;  
+    padding-right: 10px;  
+  }
+
+  .name,
+  .quantity,
+  .price {
+    width: 22%;  
+  }
+
+  .quantity {
+    .value {
+      margin: 0 8px;  
+    }
+  }
+}
 }
