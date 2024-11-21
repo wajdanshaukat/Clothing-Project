@@ -22,7 +22,9 @@
     "redux": "^5.0.1",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
-    "reselect": "^5.1.1"
+    "reselect": "^5.1.1",
+    "styled-component": "^2.8.0",
+    "styled-components": "^6.1.13"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

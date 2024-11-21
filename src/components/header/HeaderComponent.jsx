@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { auth } from "../firebase/firebaseUtils";
 import { setCurrentUser } from "../redux/user/userAction";
 import { selectCartHidden } from "../redux/cart/cartSelectors";
@@ -9,7 +8,8 @@ import CartIcon from "../cart-icon/cartIcon-component";
 import CartDropdown from "../cart-dropdown/cartDropdown-component";
 import CrownLogo from "../../assets/logoone.svg";
 
-import "./header-style.scss";
+import { HeaderContainer, LogoContainer, OptionsContainer, OptionLink } from  './header-styles'
+
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -40,30 +40,30 @@ const Header = () => {
   };
 
   return (
-    <div className="header">
-      <Link to="/" className="logo-container">
+    <HeaderContainer>
+      <LogoContainer to="/" >
         <img src={CrownLogo} alt="Logo" />
-      </Link>
-      <div className="options">
-        <Link className="option" to="/shop">
+      </LogoContainer>
+      <OptionsContainer>
+        <OptionLink to="/shop">
           SHOP
-        </Link>
-        <Link className="option" to="/contact">
+        </OptionLink>
+        <OptionLink className="option" to="/contact">
           CONTACT
-        </Link>
+        </OptionLink>
         {currentUser ? (
-          <div className="option" onClick={handleSignOut}>
+          <OptionLink as='div' onClick={handleSignOut}>
             SIGN OUT
-          </div>
+          </OptionLink>
         ) : (
-          <Link className="option" to="/signin">
+          <OptionLink className="option" to="/signin">
             SIGN IN
-          </Link>
+          </OptionLink>
         )}
         <CartIcon />
-      </div>
+      </OptionsContainer>
       {hidden ? null : <CartDropdown />}
-    </div>
+    </HeaderContainer>
   );
 };
 
