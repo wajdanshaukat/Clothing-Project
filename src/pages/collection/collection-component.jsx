@@ -1,17 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import CollectionItem from "../../components/collection-item/Collection-itemComponent";
-import { selectCollection } from "../../components/redux/shop/shop-selector";
+import CollectionsContext from "../../contexts/collections/collections-context";
 
 import "./collection-style.scss";
 
 const CollectionPage = () => {
   const { collectionId } = useParams();
 
-  const collection = useSelector((state) =>
-    selectCollection(collectionId)(state)
-  );
+  const collections = useContext(CollectionsContext);
+  const collection = collections[collectionId];
 
   useEffect(() => {
     console.log("Collection ID from URL:", collectionId);

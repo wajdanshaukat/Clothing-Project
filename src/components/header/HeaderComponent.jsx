@@ -1,69 +1,58 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import { auth } from "../firebase/firebaseUtils";
-import { setCurrentUser } from "../redux/user/userAction";
-import { selectCartHidden } from "../redux/cart/cartSelectors";
-import { selectCurrentUser } from "../redux/user/userSelectors";
 import CartIcon from "../cart-icon/cartIcon-component";
 import CartDropdown from "../cart-dropdown/cartDropdown-component";
 import CrownLogo from "../../assets/logoone.svg";
+import CurrentUserContext from "../../contexts/current-user/currentUser-context";
+import { CartContext } from "../../provider/cart/cart-provider";
 
-import { HeaderContainer, LogoContainer, OptionsContainer, OptionLink } from  './header-styles'
-
+import "./header-style.scss";
 
 const Header = () => {
-  const dispatch = useDispatch();
-  const currentUser = useSelector(selectCurrentUser);
-  const hidden = useSelector(selectCartHidden);
+  const currentUser = useContext(CurrentUserContext);
+  const { hidden } = useContext(CartContext);
 
   useEffect(() => {
-    const unsubscribeFromAuth = auth.onAuthStateChanged((userAuth) => {
-      if (userAuth) {
-        dispatch(
-          setCurrentUser({
-            id: userAuth.uid,
-            email: userAuth.email,
-            displayName: userAuth.displayName,
-            ...userAuth,
-          })
-        );
-      } else {
-        dispatch(setCurrentUser(null));
-      }
-    });
-
-    return () => unsubscribeFromAuth();
-  }, [dispatch]);
+    if (currentUser) {
+      console.log(
+        `User signed in: ${currentUser.displayName || currentUser.email}`
+      );
+    } else {
+      console.log("No user is signed in.");
+    }
+  }, [currentUser]);
 
   const handleSignOut = () => {
     auth.signOut();
   };
 
   return (
-    <HeaderContainer>
-      <LogoContainer to="/" >
+    <div className="header">
+      <Link className="logo-container" to="/">
         <img src={CrownLogo} alt="Logo" />
-      </LogoContainer>
-      <OptionsContainer>
-        <OptionLink to="/shop">
+      </Link>
+      <div className="options">
+        <Link className="option" to="/shop">
           SHOP
-        </OptionLink>
-        <OptionLink className="option" to="/contact">
+        </Link>
+        <Link className="option" to="/shop">
           CONTACT
-        </OptionLink>
+        </Link>
         {currentUser ? (
-          <OptionLink as='div' onClick={handleSignOut}>
+          <div className="option" onClick={handleSignOut}>
             SIGN OUT
-          </OptionLink>
+          </div>
         ) : (
-          <OptionLink className="option" to="/signin">
+          <Link className="option" to="/signin">
             SIGN IN
-          </OptionLink>
+          </Link>
         )}
         <CartIcon />
-      </OptionsContainer>
-      {hidden ? null : <CartDropdown />}
-    </HeaderContainer>
+      </div>
+      {!hidden && <CartDropdown />}
+    </div>
   );
 };
 
