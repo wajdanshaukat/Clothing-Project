@@ -14,8 +14,7 @@ import {
 } from "./components/firebase/firebaseUtils";
 
 import CurrentUserContext from "./contexts/current-user/currentUser-context";
-import { GlobalStyle } from "./globel-style";
-
+import './App.css'
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -43,7 +42,6 @@ const App = () => {
     <CurrentUserContext.Provider value={currentUser}>
       <div>
         <Header />
-        <GlobalStyle />
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route path="/shop/*" element={<ShopPage />} />
