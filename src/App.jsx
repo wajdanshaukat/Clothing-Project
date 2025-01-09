@@ -17,6 +17,7 @@ import { selectCurrentUser } from "./components/redux/user/userSelectors";
 import CollectionPage from "./pages/collection/collection-component";
 
 import { GlobalStyle } from "./globel-style";
+
 const App = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
