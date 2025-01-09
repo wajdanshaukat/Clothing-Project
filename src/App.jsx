@@ -13,13 +13,8 @@ import {
   createUserProfileDocument,
 } from "./components/firebase/firebaseUtils";
 
-<<<<<<< HEAD
-import { GlobalStyle } from "./globel-style";
-
-=======
 import CurrentUserContext from "./contexts/current-user/currentUser-context";
 import './App.css'
->>>>>>> 05c8cd0c16b8a562db81f605de8c87abcb3ae8d4
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
 

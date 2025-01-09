@@ -1,13 +1,8 @@
-<<<<<<< HEAD
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-
+import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-=======
-import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 
->>>>>>> 05c8cd0c16b8a562db81f605de8c87abcb3ae8d4
 import { auth } from "../firebase/firebaseUtils";
 import CartIcon from "../cart-icon/cartIcon-component";
 import CartDropdown from "../cart-dropdown/cartDropdown-component";
