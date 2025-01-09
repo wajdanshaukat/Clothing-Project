@@ -1,40 +1,35 @@
+<<<<<<< HEAD
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
+=======
+import React, { useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
+
+>>>>>>> 05c8cd0c16b8a562db81f605de8c87abcb3ae8d4
 import { auth } from "../firebase/firebaseUtils";
-import { setCurrentUser } from "../redux/user/userAction";
-import { selectCartHidden } from "../redux/cart/cartSelectors";
-import { selectCurrentUser } from "../redux/user/userSelectors";
 import CartIcon from "../cart-icon/cartIcon-component";
 import CartDropdown from "../cart-dropdown/cartDropdown-component";
 import CrownLogo from "../../assets/logoone.svg";
+import CurrentUserContext from "../../contexts/current-user/currentUser-context";
+import { CartContext } from "../../provider/cart/cart-provider";
 
 import "./header-style.scss";
 
 const Header = () => {
-  const dispatch = useDispatch();
-  const currentUser = useSelector(selectCurrentUser);
-  const hidden = useSelector(selectCartHidden);
+  const currentUser = useContext(CurrentUserContext);
+  const { hidden } = useContext(CartContext);
 
   useEffect(() => {
-    const unsubscribeFromAuth = auth.onAuthStateChanged((userAuth) => {
-      if (userAuth) {
-        dispatch(
-          setCurrentUser({
-            id: userAuth.uid,
-            email: userAuth.email,
-            displayName: userAuth.displayName,
-            ...userAuth,
-          })
-        );
-      } else {
-        dispatch(setCurrentUser(null));
-      }
-    });
-
-    return () => unsubscribeFromAuth();
-  }, [dispatch]);
+    if (currentUser) {
+      console.log(
+        `User signed in: ${currentUser.displayName || currentUser.email}`
+      );
+    } else {
+      console.log("No user is signed in.");
+    }
+  }, [currentUser]);
 
   const handleSignOut = () => {
     auth.signOut();
